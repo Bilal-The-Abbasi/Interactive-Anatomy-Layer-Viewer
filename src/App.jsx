@@ -6,7 +6,7 @@ import RightSidebar from './components/RightSidebar'
 import LoadingScreen from './components/LoadingScreen'
 import StoryModePanel from './components/StoryModePanel'
 import HoverTooltip from './components/HoverTooltip'
-import AnatomyViewer from './scenes/AnatomyViewer'
+import LayeredViewer from './scenes/LayeredViewer'
 import { useAnatomyStore } from './store/anatomyStore'
 
 function ViewerHint() {
@@ -15,19 +15,19 @@ function ViewerHint() {
 
   return (
     <motion.div
-      className="absolute bottom-8 left-1/2 pointer-events-none z-20 float-hint"
+      className="absolute bottom-8 left-1/2 pointer-events-none z-20"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 2 }}
+      transition={{ delay: 2.5 }}
+      style={{ transform: 'translateX(-50%)' }}
     >
       <div
-        className="flex items-center gap-2 px-4 py-2 rounded-full text-xs"
+        className="flex items-center gap-2 px-4 py-2 rounded-full text-xs whitespace-nowrap"
         style={{
-          background: 'rgba(2,10,22,0.8)',
+          background: 'rgba(2,10,22,0.85)',
           border: '1px solid rgba(255,255,255,0.08)',
-          color: 'rgba(148,163,184,0.5)',
+          color: 'rgba(148,163,184,0.6)',
           backdropFilter: 'blur(8px)',
-          transform: 'translateX(-50%)',
         }}
       >
         <motion.div
@@ -35,7 +35,7 @@ function ViewerHint() {
           animate={{ scale: [1, 1.5, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
         />
-        Drag to rotate · Scroll to zoom · Click to explore
+        Scroll to zoom · Drag to pan · Click anatomy to explore
       </div>
     </motion.div>
   )
@@ -55,37 +55,29 @@ export default function App() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          {/* Top navigation bar */}
           <TopBar />
 
-          {/* Main content area */}
           <div className="flex flex-1 overflow-hidden relative">
-            {/* Left sidebar */}
             <LeftSidebar />
 
-            {/* Center: 3D Anatomy Viewer */}
-            <main className="relative flex-1 overflow-hidden canvas-bg">
-              <Suspense
-                fallback={
-                  <div className="flex items-center justify-center h-full">
-                    <motion.div
-                      className="w-8 h-8 rounded-full border-2 border-blue-500/30 border-t-blue-500"
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                    />
-                  </div>
-                }
-              >
-                <AnatomyViewer />
+            <main className="relative flex-1 overflow-hidden">
+              <Suspense fallback={
+                <div className="flex items-center justify-center h-full" style={{ background: '#050a15' }}>
+                  <motion.div
+                    className="w-8 h-8 rounded-full border-2 border-blue-500/30 border-t-blue-500"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  />
+                </div>
+              }>
+                <LayeredViewer />
               </Suspense>
 
-              {/* Floating UI overlays */}
               <HoverTooltip />
               <ViewerHint />
               <StoryModePanel />
             </main>
 
-            {/* Right sidebar */}
             <RightSidebar />
           </div>
         </motion.div>

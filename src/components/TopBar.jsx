@@ -2,10 +2,9 @@ import { motion } from 'framer-motion'
 import { useAnatomyStore } from '../store/anatomyStore'
 
 const VIEW_MODES = [
-  { id: 'front', label: 'Front', icon: '⬛' },
-  { id: 'side', label: 'Side', icon: '◼' },
-  { id: 'rear', label: 'Rear', icon: '⬛' },
-  { id: 'free', label: 'Free', icon: '⟳' },
+  { id: 'front',    label: 'Anterior' },
+  { id: 'rear',     label: 'Posterior' },
+  { id: 'side',     label: 'Lateral' },
 ]
 
 export default function TopBar() {
