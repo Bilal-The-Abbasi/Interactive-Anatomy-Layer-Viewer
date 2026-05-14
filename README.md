@@ -1,98 +1,73 @@
-# Human Anatomy Layer Explorer
+# Interactive Anatomy Layer Viewer
 
-> An immersive, interactive 3D human anatomy exploration platform built for the next generation of medical education.
+> A professional, interactive 3D human anatomy education platform built with React Three Fiber.
 
----
-
-## Vision
-
-The Human Anatomy Layer Explorer reimagines how people learn about the human body. Rather than static diagrams or dense textbooks, this platform delivers a cinematic, hands-on experience that progressively reveals the layers of human anatomy — from skin to skeleton, organ to nerve.
-
-Designed to feel like a premium science museum installation, a medical-grade visualization system, and an Apple-level educational product — all at once.
+**Live Demo:** [https://anatomy-viewer-olive.vercel.app](https://anatomy-viewer-olive.vercel.app)
 
 ---
 
-## Key Features
+## Overview
 
-### 3D Interactive Anatomy Viewer
-- Procedurally generated human figure with 8 anatomical system layers
-- Smooth, cinematic layer transitions powered by Framer Motion
-- Bloom post-processing for authentic bioluminescent depth
-- Ambient floating particles create an immersive science-lab atmosphere
+The Interactive Anatomy Layer Viewer is a web-based anatomy education tool that renders the complete human body as a set of independently controllable 3D layers. Each body system — skin, skeleton, muscles, circulatory, nervous, respiratory, digestive, and lymphatic — is loaded as a separate GLB model and can be toggled, isolated, and adjusted in real time.
 
-### Layer System
-- **Skin** · **Muscular** · **Skeletal** · **Nervous** · **Circulatory** · **Respiratory** · **Digestive** · **Lymphatic**
-- Toggle each system on/off independently
-- Per-layer opacity sliders for progressive reveal
-- Isolate any single system for focused study
-
-### Interactive Learning
-- Click any anatomical structure for an instant educational panel
-- Curated descriptions, primary functions, and fascinating facts
-- Related systems cross-linking for holistic understanding
-- Hover tooltips identify structures before clicking
-
-### Guided Story Mode
-- **Journey Through the Circulatory System** — trace blood from heart to capillary and back
-- **Layers of the Human Body** — reveal anatomy layer-by-layer from skin to skeleton
-- **The Nervous System** — explore the body's electrochemical communication network
-- **The Respiratory Journey** — follow air from atmosphere to alveoli
-
-### Intelligent Search
-- Instant anatomy search across all 26+ named structures
-- Results filter by name, system, description, and function
-- Click a result to select the structure and open its detail panel
+This project is designed for healthcare education, nursing students, anatomy learners, and AI-powered education portfolios.
 
 ---
 
-## Architecture
+## Features
 
-```
-src/
-├── components/          # UI components (React + Framer Motion)
-│   ├── TopBar.jsx       # Navigation bar with view mode switcher
-│   ├── LeftSidebar.jsx  # Layer toggles, search, guided lessons
-│   ├── RightSidebar.jsx # Anatomy detail panel
-│   ├── LoadingScreen.jsx
-│   ├── StoryModePanel.jsx
-│   ├── HoverTooltip.jsx
-│   └── GlassPanel.jsx
-│
-├── scenes/              # React Three Fiber scene components
-│   ├── AnatomyViewer.jsx # R3F Canvas wrapper with post-processing
-│   ├── HumanFigure.jsx  # Procedural 3D figure (8 anatomical layers)
-│   ├── CameraRig.jsx    # Camera animation + OrbitControls
-│   ├── SceneLighting.jsx
-│   └── AnatomyLayer.jsx
-│
-├── data/                # Static anatomy content
-│   ├── anatomySystems.js # 8 systems + 26 anatomy parts with metadata
-│   └── storyModes.js    # 4 guided learning experiences
-│
-├── store/               # Zustand global state
-│   └── anatomyStore.js  # Single store, 14 state fields, 12 actions
-│
-├── hooks/
-│   └── useAnatomySearch.js
-│
-└── utils/
-    └── colorUtils.js
-```
+| Feature | Description |
+|---|---|
+| **8 Anatomy System Layers** | Skin, Skeleton, Muscles, Circulatory, Nervous, Respiratory, Digestive, Lymphatic |
+| **GLB Model Loading** | All systems loaded via `useGLTF` with `@react-three/drei` |
+| **Opacity Sliders** | Per-layer opacity control (0–100%) with smooth transitions |
+| **Isolate Mode** | Focus on a single system; others fade to near-transparent |
+| **Smooth Fade Transitions** | Frame-accurate lerp-based opacity animation |
+| **Camera Presets** | Front / Side / Rear / Free orbit controls |
+| **Hover & Click Info** | Click any structure to view name, function, and anatomical facts |
+| **Loading Progress Bar** | Animated GLB loading indicator with percentage |
+| **Missing Model Fallback** | Graceful error boundary if a model file is unavailable |
+| **Story Mode** | Guided educational narratives through body systems |
+| **Search** | Full-text search across all anatomical structures |
+| **Bloom Post-Processing** | Medical visualization glow effect |
+| **Ambient Particles** | Subtle floating particle atmosphere |
+| **Responsive Layout** | Works on desktop and tablet viewports |
+
+---
+
+## GLB Model Files
+
+All models are located in `public/models/anatomy/` and were procedurally generated using Python + trimesh in anatomical position (Y-up, front-facing, arms slightly abducted, palms forward). All models share the same coordinate space, scale, and origin point.
+
+| File | System | Description |
+|---|---|---|
+| `skin.glb` | Integumentary | Full-body skin envelope |
+| `skeleton.glb` | Skeletal | Complete bony skeleton with 206 bones approximated |
+| `muscles.glb` | Muscular | Major muscle groups (deltoid, pectorals, quads, etc.) |
+| `circulatory.glb` | Cardiovascular | Heart, aorta, major arteries and veins |
+| `nervous.glb` | Nervous | Brain, spinal cord, major nerve plexuses |
+| `respiratory.glb` | Respiratory | Lungs, trachea, bronchi, diaphragm |
+| `digestive.glb` | Digestive | Stomach, liver, intestines, pancreas |
+| `lymphatic.glb` | Lymphatic | Lymph nodes, thoracic duct, spleen, thymus |
+| `organs.glb` | Composite | Key organs combined (brain, heart, lungs, liver, kidneys) |
+| `full-body-reference.glb` | Reference | Semi-transparent skin + skeleton + heart overlay |
+
+**Model style:** Polished abstract medical visualization. Not intended as a clinical reference.  
+**License:** Procedurally generated — original work, free for educational and portfolio use.
 
 ---
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|-----------|
-| Framework | React 18 + Vite 5 |
-| 3D Rendering | React Three Fiber + Three.js |
-| Post-processing | @react-three/postprocessing (Bloom) |
-| Helpers | @react-three/drei (OrbitControls, etc.) |
-| Animation | Framer Motion 11 |
-| State | Zustand 4 |
-| Styling | Tailwind CSS 3 |
-| Typography | Inter + JetBrains Mono |
+- **React 18** + **Vite 5**
+- **React Three Fiber** (`@react-three/fiber`) — WebGL renderer
+- **@react-three/drei** — `useGLTF`, `Html`, `OrbitControls`, `useProgress`
+- **@react-three/postprocessing** — Bloom effect
+- **Three.js** — 3D engine
+- **Zustand** — Global state management
+- **Framer Motion** — UI animations
+- **Tailwind CSS** — Utility-first styling
+- **Python + trimesh** — GLB model generation pipeline
 
 ---
 
@@ -100,8 +75,8 @@ src/
 
 ```bash
 # Clone the repository
-git clone https://github.com/bilal-the-abbasi/interactive-anatomy-layer-viewer.git
-cd interactive-anatomy-layer-viewer
+git clone https://github.com/Bilal-The-Abbasi/Interactive-Anatomy-Layer-Viewer.git
+cd Interactive-Anatomy-Layer-Viewer
 
 # Install dependencies
 npm install
@@ -109,81 +84,53 @@ npm install
 # Start development server
 npm run dev
 
-# Build for production
+# Production build
 npm run build
 ```
 
-Open `http://localhost:5173` in your browser.
+---
+
+## Project Structure
+
+```
+├── public/
+│   └── models/
+│       └── anatomy/          # GLB model files (10 files, ~1.7 MB total)
+├── src/
+│   ├── components/           # UI panels (TopBar, LeftSidebar, RightSidebar, etc.)
+│   ├── data/                 # Anatomy system definitions and story modes
+│   ├── hooks/                # Custom React hooks
+│   ├── scenes/               # Three.js scene components
+│   │   ├── HumanFigure.jsx   # GLB model loader and layer manager
+│   │   ├── AnatomyViewer.jsx # Canvas + post-processing setup
+│   │   ├── CameraRig.jsx     # Camera presets and orbit controls
+│   │   └── SceneLighting.jsx # Lighting rig
+│   ├── store/                # Zustand anatomy store
+│   └── utils/                # Colour utilities
+└── vercel.json               # Vercel deployment config
+```
 
 ---
 
-## Usage Guide
+## Educational Use Notice
 
-1. **Explore layers** — Use the left sidebar to toggle anatomy systems on/off. Adjust opacity sliders for progressive reveal.
-2. **Isolate a system** — Hover a layer in the sidebar and click "Isolate" to focus on a single system.
-3. **Click to learn** — Click any structure in the 3D viewer. The right panel populates with educational content.
-4. **Search** — Type in the search box to find specific anatomy. Press Enter or click a result to focus it.
-5. **Guided stories** — Navigate to the "Stories" tab in the left sidebar. Select a guided experience and follow the narrated steps.
-6. **Change views** — Use the view mode switcher in the top bar. Switch between Front, Side, Rear, and Free rotate.
+This application is designed for **educational and portfolio purposes only**. The 3D anatomy models are procedurally generated abstract visualizations intended to illustrate body system concepts. They are **not medically accurate** and should not be used for clinical decision-making, diagnosis, or medical training requiring anatomical precision.
 
 ---
 
-## Design System
+## Attribution & License
 
-**Color Palette (Anatomy Systems)**
-
-| System | Color |
-|--------|-------|
-| Skin | `#d4a899` warm peach |
-| Muscular | `#c0392b` deep crimson |
-| Skeletal | `#e8e4d0` ivory bone |
-| Nervous | `#4fc3f7` electric blue |
-| Circulatory | `#e53935` blood red |
-| Respiratory | `#81d4fa` sky blue |
-| Digestive | `#ff8f00` amber |
-| Lymphatic | `#66bb6a` mint green |
-
-**Interface**
-- Background: `#020c1b` deep navy
-- Panels: `rgba(5, 15, 30, 0.82)` glassmorphism
-- Text: `#e2e8f0` / `#94a3b8` hierarchy
-- Accent: `#3b82f6` blue
+- **GLB Models:** Procedurally generated using Python + [trimesh](https://trimesh.org/) — original work by the project author. Free to use for educational and non-commercial purposes.
+- **UI Framework:** React Three Fiber (MIT), Three.js (MIT), Framer Motion (MIT), Zustand (MIT), Tailwind CSS (MIT)
+- **Anatomy Data:** Educational descriptions written for this project
 
 ---
 
-## Future Roadmap
+## Deployment
 
-### Near-term
-- [ ] GLTF anatomical model integration (replace procedural geometry)
-- [ ] Quiz mode with anatomy identification challenges
-- [ ] Voice narration for story mode using Web Speech API
-- [ ] Keyboard navigation and full accessibility (WCAG AA)
-- [ ] Mobile-optimized touch controls
+Deployed on [Vercel](https://vercel.com). To deploy your own instance:
 
-### Medium-term
-- [ ] AI anatomy tutor with natural language Q&A
-- [ ] Educator dashboard with class management
-- [ ] Progress tracking and completion certificates
-- [ ] Multiplayer classroom mode (shared annotation)
-- [ ] Exportable study summaries (PDF)
-
-### Long-term
-- [ ] WebXR / AR support for spatial anatomy overlay
-- [ ] VR mode compatible with Meta Quest
-- [ ] Medical school curriculum integration
-- [ ] SaaS licensing for institutions
-- [ ] Custom anatomy deck builder for educators
-- [ ] Patient education module for clinical settings
-
----
-
-## Performance Notes
-
-- The 3D figure uses procedural Three.js geometry — no external asset loading required
-- Bloom post-processing is tuned conservatively to maintain 60fps on integrated graphics
-- Particle count is limited to 20 to prevent GPU pressure
-- All Framer Motion animations use hardware-accelerated CSS transforms
-
----
-
-*Built with care for the next generation of anatomy education.*
+```bash
+npm install -g vercel
+vercel deploy --prod
+```
